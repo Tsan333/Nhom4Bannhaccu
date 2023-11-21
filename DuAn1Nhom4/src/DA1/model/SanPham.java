@@ -4,15 +4,13 @@ public class SanPham {
 
     private String ID;
     private String TenSP;
-    private long GiaSP;
 
     public SanPham() {
     }
 
-    public SanPham(String ID, String TenSP, long GiaSP) {
+    public SanPham(String ID, String TenSP) {
         this.ID = ID;
         this.TenSP = TenSP;
-        this.GiaSP = GiaSP;
     }
 
     public String getID() {
@@ -31,14 +29,9 @@ public class SanPham {
         this.TenSP = TenSP;
     }
 
-    public long getGiaSP() {
-        return GiaSP;
+    @Override
+    public String toString() {
+        return TenSP;
     }
 
-    public void setGiaSP(long GiaSP) {
-        this.GiaSP = GiaSP;
-    }
-
-    
-    
 }
