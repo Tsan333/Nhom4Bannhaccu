@@ -9,22 +9,23 @@ package DA1.model;
  * @author namtr
  */
 public class XuatXu {
-    private String Id;
+
+    private int Id;
     private String TenXuatXu;
 
     public XuatXu() {
     }
 
-    public XuatXu(String Id, String TenXuatXu) {
+    public XuatXu(int Id, String TenXuatXu) {
         this.Id = Id;
         this.TenXuatXu = TenXuatXu;
     }
 
-    public String getId() {
+    public int getId() {
         return Id;
     }
 
-    public void setId(String Id) {
+    public void setId(int Id) {
         this.Id = Id;
     }
 
@@ -35,7 +36,13 @@ public class XuatXu {
     public void setTenXuatXu(String TenXuatXu) {
         this.TenXuatXu = TenXuatXu;
     }
+
     
     
-            
+
+    @Override
+    public String toString() {
+        return TenXuatXu;
+    }
+
 }

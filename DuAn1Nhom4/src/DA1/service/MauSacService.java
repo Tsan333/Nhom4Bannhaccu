@@ -4,7 +4,6 @@
  */
 package DA1.service;
 
-
 import DA1.model.MauSac;
 import DBconnext.DBconect;
 import java.sql.Connection;
@@ -12,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,20 +19,65 @@ import java.util.List;
  * @author namtr
  */
 public class MauSacService {
-    public static List<MauSac> selectAll() {
+
+    public static List<MauSac> selectTblThuoTinh() {
         List<MauSac> listMauSac = new ArrayList<>();
-        String sql = "SELECT * FROM mausac";
+        String sql = "SELECT * FROM mausac WHERE xoa = '1'"; // Sửa câu lệnh SQL ở đây
+        Connection con = null;
         try {
-            Statement st = DBconect.getConnnetion().createStatement();
+            con = DBconect.getConnnetion();
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                String ID = rs.getString("ID");
-                String TenMau = rs.getString("TenMau");
-
-                listMauSac.add(new MauSac(ID,TenMau));
+                int ID = rs.getInt("id");
+                String TenMau = rs.getString("tenmau");
+                listMauSac.add(new MauSac(ID, TenMau));
             }
         } catch (Exception e) {
-            System.out.println("Lỗi:" + e);
+            System.out.println("Lỗi phần bảng thuộc tính:" + e);
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return listMauSac;
+    }
+
+    public static List<MauSac> selectTblThungRacThuoTinh() {
+        List<MauSac> listMauSac = new ArrayList<>();
+        String sql = "SELECT * FROM mausac WHERE xoa = '0'";
+        Connection con = null;
+        Statement st = null;
+        try {
+            con = DBconect.getConnnetion();
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                int ID = rs.getInt("id");
+                String TenMau = rs.getString("tenmau");
+                listMauSac.add(new MauSac(ID, TenMau));
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi: phần bảng thùng rác" + e);
+        } finally {
+            if (st != null) {
+                try {
+                    st.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listMauSac;
     }
@@ -40,7 +85,7 @@ public class MauSacService {
     public static String add(String MauSac) {
         String resultMessage = "Thêm Thất Bại";
         try (Connection con = DBconect.getConnnetion()) {
-            String sql = "INSERT INTO mausac VALUES (?)";
+            String sql = "INSERT INTO mausac(TenMau,xoa) VALUES (?,1)";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, MauSac);
             int result = st.executeUpdate();
@@ -48,34 +93,69 @@ public class MauSacService {
                 resultMessage = "Thêm Thành Công";
             }
         } catch (Exception e) {
-            resultMessage = "Thêm Lỗi: " + e;
+            resultMessage = "Thêm Lỗi phần add: " + e;
         }
         return resultMessage;
     }
 
-    public static String delete(String IDMau) {
+    public static String returnItem(Integer IDMau) {
         Connection con = DBconect.getConnnetion();
-        String sql = "DELETE FROM mausac WHERE ID = ?";
+        String sql = "UPDATE mausac SET xoa = 1 WHERE Id = ?";
+
         try {
+            con.setAutoCommit(false);
             PreparedStatement st = con.prepareStatement(sql);
-            st.setString(1, IDMau);
-            int result = st.executeUpdate();
-            if (result > 0) {
-                return "Xoa Thanh Cong";
-            }
-            return "Xoa That Bai";
+            st.setInt(1, IDMau);
+            st.executeUpdate();
+            con.commit();
+
+            return "Trả lại thành công";
         } catch (Exception e) {
-            return "Xoa Loi: " + e;
+            return "Trả lại lỗi: " + e;
         }
     }
 
-    public static String update(MauSac MauSac) {
+    public static String DayVaoThungRac(Integer IDMau) {
+        Connection con = DBconect.getConnnetion();
+        String sql = "UPDATE mausac SET xoa = 0 WHERE Id = ?";
+
+        try {
+            con.setAutoCommit(false);
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, IDMau);
+            st.executeUpdate();
+            con.commit();
+
+            return "Xóa thành công";
+        } catch (Exception e) {
+            return "Xóa lỗi: " + e;
+        }
+    }
+
+    public static String delete(Integer IDMau) {
+        Connection con = DBconect.getConnnetion();
+        String sql = "DELETE FROM mausac WHERE Id = ?";
+
+        try {
+            con.setAutoCommit(false);
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, IDMau);
+            st.executeUpdate();
+            con.commit();
+
+            return "Xóa thành công";
+        } catch (Exception e) {
+            return "Xóa lỗi: " + e;
+        }
+    }
+
+    public static String update(MauSac tt) {
         Connection con = DBconect.getConnnetion();
         String sql = "UPDATE mausac SET tenmau = ? WHERE ID = ?";
         try {
             PreparedStatement st = con.prepareStatement(sql);
-            st.setString(1, MauSac.getTenMau());
-            st.setString(3, MauSac.getId());
+            st.setString(1, tt.getTenMau());
+            st.setInt(2, tt.getId());
             int result = st.executeUpdate();
             if (result > 0) {
                 return "Cap Nhat Thanh Cong";

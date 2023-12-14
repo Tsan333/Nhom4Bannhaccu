@@ -9,22 +9,23 @@ package DA1.model;
  * @author namtr
  */
 public class NhaSanXuat {
-    private String ID;
+
+    private int ID;
     private String TenNSX;
 
     public NhaSanXuat() {
     }
 
-    public NhaSanXuat(String ID, String TenNSX) {
+    public NhaSanXuat(int ID, String TenNSX) {
         this.ID = ID;
         this.TenNSX = TenNSX;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -35,5 +36,13 @@ public class NhaSanXuat {
     public void setTenNSX(String TenNSX) {
         this.TenNSX = TenNSX;
     }
+
     
+    
+
+    @Override
+    public String toString() {
+        return TenNSX;
+    }
+
 }

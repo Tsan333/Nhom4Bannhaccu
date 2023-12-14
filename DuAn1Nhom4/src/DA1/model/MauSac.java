@@ -10,22 +10,22 @@ package DA1.model;
  */
 public class MauSac {
 
-    private String id;
+    private int id;
     private String TenMau;
 
     public MauSac() {
     }
 
-    public MauSac(String id, String TenMau) {
+    public MauSac(int id, String TenMau) {
         this.id = id;
         this.TenMau = TenMau;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,6 +36,8 @@ public class MauSac {
     public void setTenMau(String TenMau) {
         this.TenMau = TenMau;
     }
+
+   
 
     @Override
     public String toString() {

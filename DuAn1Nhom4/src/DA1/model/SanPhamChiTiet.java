@@ -10,12 +10,13 @@ package DA1.model;
  */
 public class SanPhamChiTiet {
 
-    private String ID;
-    private String ID_SanPham;
-    private String ID_ThuongHieu;
-    private String ID_KichThuoc;
-    private String ID_MauSac;
-    private String ID_XuatXu;
+    private int ID;
+    private int ID_SanPham;
+    private int ID_ThuongHieu;
+    private int ID_KichThuoc;
+    private int ID_MauSac;
+    private int ID_XuatXu;
+    private int ID_DangDan;
     private String TenSanPham;
     private String HinhAnh;
     private String NXS;
@@ -23,18 +24,21 @@ public class SanPhamChiTiet {
     private Long GiaBan;
     private String KichCo;
     private String MauSac;
+    private String DangDan;
     private int SoLuong;
+    private String GhiChu;
 
     public SanPhamChiTiet() {
     }
 
-    public SanPhamChiTiet(String ID, String ID_SanPham, String ID_ThuongHieu, String ID_KichThuoc, String ID_MauSac, String ID_XuatXu, String TenSanPham, String HinhAnh, String NXS, String XuatXu, Long GiaBan, String KichCo, String MauSac, int SoLuong) {
+    public SanPhamChiTiet(int ID, int ID_SanPham, int ID_ThuongHieu, int ID_KichThuoc, int ID_MauSac, int ID_XuatXu, int ID_DangDan, String TenSanPham, String HinhAnh, String NXS, String XuatXu, Long GiaBan, String KichCo, String MauSac, String DangDan, int SoLuong, String GhiChu) {
         this.ID = ID;
         this.ID_SanPham = ID_SanPham;
         this.ID_ThuongHieu = ID_ThuongHieu;
         this.ID_KichThuoc = ID_KichThuoc;
         this.ID_MauSac = ID_MauSac;
         this.ID_XuatXu = ID_XuatXu;
+        this.ID_DangDan = ID_DangDan;
         this.TenSanPham = TenSanPham;
         this.HinhAnh = HinhAnh;
         this.NXS = NXS;
@@ -42,55 +46,65 @@ public class SanPhamChiTiet {
         this.GiaBan = GiaBan;
         this.KichCo = KichCo;
         this.MauSac = MauSac;
+        this.DangDan = DangDan;
         this.SoLuong = SoLuong;
+        this.GhiChu = GhiChu;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public String getID_SanPham() {
+    public int getID_SanPham() {
         return ID_SanPham;
     }
 
-    public void setID_SanPham(String ID_SanPham) {
+    public void setID_SanPham(int ID_SanPham) {
         this.ID_SanPham = ID_SanPham;
     }
 
-    public String getID_ThuongHieu() {
+    public int getID_ThuongHieu() {
         return ID_ThuongHieu;
     }
 
-    public void setID_ThuongHieu(String ID_ThuongHieu) {
+    public void setID_ThuongHieu(int ID_ThuongHieu) {
         this.ID_ThuongHieu = ID_ThuongHieu;
     }
 
-    public String getID_KichThuoc() {
+    public int getID_KichThuoc() {
         return ID_KichThuoc;
     }
 
-    public void setID_KichThuoc(String ID_KichThuoc) {
+    public void setID_KichThuoc(int ID_KichThuoc) {
         this.ID_KichThuoc = ID_KichThuoc;
     }
 
-    public String getID_MauSac() {
+    public int getID_MauSac() {
         return ID_MauSac;
     }
 
-    public void setID_MauSac(String ID_MauSac) {
+    public void setID_MauSac(int ID_MauSac) {
         this.ID_MauSac = ID_MauSac;
     }
 
-    public String getID_XuatXu() {
+    public int getID_XuatXu() {
         return ID_XuatXu;
     }
 
-    public void setID_XuatXu(String ID_XuatXu) {
+    public void setID_XuatXu(int ID_XuatXu) {
         this.ID_XuatXu = ID_XuatXu;
+    }
+
+    public int getID_DangDan() {
+        return ID_DangDan;
+    }
+
+    public void setID_DangDan(int ID_DangDan) {
+        this.ID_DangDan = ID_DangDan;
     }
 
     public String getTenSanPham() {
@@ -149,6 +163,14 @@ public class SanPhamChiTiet {
         this.MauSac = MauSac;
     }
 
+    public String getDangDan() {
+        return DangDan;
+    }
+
+    public void setDangDan(String DangDan) {
+        this.DangDan = DangDan;
+    }
+
     public int getSoLuong() {
         return SoLuong;
     }
@@ -157,5 +179,19 @@ public class SanPhamChiTiet {
         this.SoLuong = SoLuong;
     }
 
+    public String getGhiChu() {
+        return GhiChu;
+    }
+
+    public void setGhiChu(String GhiChu) {
+        this.GhiChu = GhiChu;
+    }
+
     
+    
+    @Override
+    public String toString() {
+        return String.valueOf(ID_SanPham);
+    }
+
 }

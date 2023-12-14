@@ -10,22 +10,22 @@ package DA1.model;
  */
 public class KichThuoc {
 
-    private String ID;
+    private int ID;
     private String KichThuoc;
 
     public KichThuoc() {
     }
 
-    public KichThuoc(String ID, String KichThuoc) {
+    public KichThuoc(int ID, String KichThuoc) {
         this.ID = ID;
         this.KichThuoc = KichThuoc;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -36,6 +36,8 @@ public class KichThuoc {
     public void setKichThuoc(String KichThuoc) {
         this.KichThuoc = KichThuoc;
     }
+
+    
 
     @Override
     public String toString() {

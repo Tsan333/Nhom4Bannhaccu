@@ -4,13 +4,15 @@ public class SanPham {
 
     private String ID;
     private String TenSP;
+    private int id_NhanVien;
 
     public SanPham() {
     }
 
-    public SanPham(String ID, String TenSP) {
+    public SanPham(String ID, String TenSP, int id_NhanVien) {
         this.ID = ID;
         this.TenSP = TenSP;
+        this.id_NhanVien = id_NhanVien;
     }
 
     public String getID() {
@@ -29,6 +31,14 @@ public class SanPham {
         this.TenSP = TenSP;
     }
 
+    public int getId_NhanVien() {
+        return id_NhanVien;
+    }
+
+    public void setId_NhanVien(int id_NhanVien) {
+        this.id_NhanVien = id_NhanVien;
+    }
+    
     @Override
     public String toString() {
         return TenSP;

@@ -18,7 +18,7 @@ public class DBconect {
 
     private static String user = "sa";
     private static String password = "123123123a";
-    private static String url = "jdbc:sqlserver://localhost:1433;databaseName=DA_BanGhita;\n"
+    private static String url = "jdbc:sqlserver://localhost:1433;databaseName=DA_BanGuita2;\n"
             + "encrypt=true;trustServerCertificate=true;";
 
     //Chạy khối mã trong static trước khi chạy cod trong hàm main

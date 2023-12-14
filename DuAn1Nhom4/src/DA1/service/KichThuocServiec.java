@@ -20,20 +20,38 @@ import java.util.List;
  */
 public class KichThuocServiec {
 
-    public static List<KichThuoc> selectAll() {
-        List<KichThuoc> listKichThuoc = new ArrayList<>();
-        String sql = "SELECT * FROM KichThuoc";
+   public static ArrayList<KichThuoc> selectTblThuoTinh() {
+        ArrayList<KichThuoc> listKichThuoc = new ArrayList<>();
+        String sql = "SELECT * FROM kichthuoc where xoa = 1"; // Sửa câu lệnh SQL ở đây
         try {
             Statement st = DBconect.getConnnetion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                String ID = rs.getString("ID");
-                String KichThuoc = rs.getString("KichThuoc");
-
-                listKichThuoc.add(new KichThuoc(ID, KichThuoc));
+                int ID = rs.getInt("id");
+                String TenMau = rs.getString("kichthuoc");
+                listKichThuoc.add(new KichThuoc(ID, TenMau));
+                System.out.println("Dẫ thêm vào bảng thuoc tính kích thước");
             }
         } catch (Exception e) {
-            System.out.println("Lỗi:" + e);
+            System.out.println("Lỗi phần bảng thuộc tính kích thước:" + e);
+        }
+        return listKichThuoc;
+    }
+
+    public static ArrayList<KichThuoc> selectTblThungRacThuoTinh() {
+        ArrayList<KichThuoc> listKichThuoc = new ArrayList<>();
+        String sql = "SELECT * FROM kichthuoc WHERE xoa = 0 ";
+        try {
+            Statement st = DBconect.getConnnetion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                int ID = rs.getInt("id");
+                String TenMau = rs.getString("kichthuoc");
+                listKichThuoc.add(new KichThuoc(ID, TenMau));
+                System.out.println("Dẫ thêm vào bảng thuoc tính kích thước");
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi: phần bảng thùng rác Lỗi phần bảng thuộc tính kích thước" + e);
         }
         return listKichThuoc;
     }
@@ -41,7 +59,7 @@ public class KichThuocServiec {
     public static String add(String KichThuoc) {
         String resultMessage = "Thêm Thất Bại";
         try (Connection con = DBconect.getConnnetion()) {
-            String sql = "INSERT INTO KichThuoc (KichThuoc) VALUES (?)";
+            String sql = "INSERT INTO KichThuoc(KichThuoc,xoa) VALUES (?,1)";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, KichThuoc);
             int result = st.executeUpdate();
@@ -49,34 +67,68 @@ public class KichThuocServiec {
                 resultMessage = "Thêm Thành Công";
             }
         } catch (Exception e) {
-            resultMessage = "Thêm Lỗi: " + e;
+            resultMessage = "Thêm Lỗi phần add: " + e;
         }
         return resultMessage;
     }
+    
+    public static String returnItem(Integer ID_KT) {
+    Connection con = DBconect.getConnnetion();
+    String sql = "UPDATE KichThuoc SET xoa = 1 WHERE Id = ?";
+    try {
+        con.setAutoCommit(false);
+        PreparedStatement st = con.prepareStatement(sql);
+        st.setInt(1, ID_KT);
+        st.executeUpdate();
+        con.commit();
 
-    public static String delete(String IDKichThuoc) {
-        Connection con = DBconect.getConnnetion();
-        String sql = "DELETE FROM KichThuoc WHERE ID = ?";
-        try {
-            PreparedStatement st = con.prepareStatement(sql);
-            st.setString(1, IDKichThuoc);
-            int result = st.executeUpdate();
-            if (result > 0) {
-                return "Xoa Thanh Cong";
-            }
-            return "Xoa That Bai";
-        } catch (Exception e) {
-            return "Xoa Loi: " + e;
-        }
+        return "Trả lại thành công";
+    } catch (Exception e) {
+        return "Trả lại lỗi: " + e;
     }
+}
 
-    public static String update(KichThuoc KichThuoc) {
+    public static String DayVaoThungRac(Integer ID_KT) {
+    Connection con = DBconect.getConnnetion();
+    String sql = "UPDATE KichThuoc SET xoa = 0 WHERE Id = ?";
+    try {
+        con.setAutoCommit(false);
+        PreparedStatement st = con.prepareStatement(sql);
+        st.setInt(1, ID_KT);
+        st.executeUpdate();
+        con.commit();
+
+        return "Xóa thành công";
+    } catch (Exception e) {
+        return "Xóa lỗi: " + e;
+    }
+}
+    
+    
+     public static String delete(Integer ID_DD) {
+    Connection con = DBconect.getConnnetion();
+    String sql = "DELETE FROM dangdan WHERE Id = ?";
+
+    try {
+        con.setAutoCommit(false);
+        PreparedStatement st = con.prepareStatement(sql);
+        st.setInt(1, ID_DD);
+        st.executeUpdate();
+        con.commit();
+
+        return "Xóa thành công";
+    } catch (Exception e) {
+        return "Xóa lỗi: " + e;
+    }
+}
+
+ public static String update(KichThuoc kt) {
         Connection con = DBconect.getConnnetion();
-        String sql = "UPDATE KichThuoc SET KichThuoc = ? WHERE ID = ?";
+        String sql = "UPDATE THUONGHIEU SET tenThuongHieu = ? WHERE ID = ?";
         try {
             PreparedStatement st = con.prepareStatement(sql);
-            st.setString(1, KichThuoc.getKichThuoc());
-            st.setString(2, KichThuoc.getID());
+            st.setString(1, kt.getKichThuoc());
+            st.setInt(2, kt.getID());
             int result = st.executeUpdate();
             if (result > 0) {
                 return "Cap Nhat Thanh Cong";
